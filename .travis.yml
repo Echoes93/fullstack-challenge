@@ -15,3 +15,6 @@ script:
   - cd $ROOT_FOLDER
   - npm install
   - npm test
+
+notifications:
+  email: false
