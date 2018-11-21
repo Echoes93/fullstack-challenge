@@ -2,11 +2,13 @@ language: node_js
 node_js:
   - "10"
 
-matrix:
+jobs:
   include:
   - name: Client Pipeline
+    if: commit_message ~= /\bFE\b/ 
     env: ROOT_FOLDER=client
   - name: Server Pipeline
+    if: commit_message ~= /\bBE\b/ 
     env: ROOT_FOLDER=server
 
 script:
