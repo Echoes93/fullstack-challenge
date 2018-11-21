@@ -5,7 +5,8 @@
   "author": "Dmitry Isachenko",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -L server.js"
+    "start": "nodemon -L server.js",
+    "test": "echo \"tested\" && exit 0"
   },
   "dependencies": {
     "express": "^4.16.1"

@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "10"
+
+matrix:
+  include:
+  - name: Client Pipeline
+    env: ROOT_FOLDER=client
+  - name: Server Pipeline
+    env: ROOT_FOLDER=server
+
+script:
+  - cd $ROOT_FOLDER
+  - npm test
