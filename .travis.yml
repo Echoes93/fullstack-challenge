@@ -11,4 +11,5 @@ matrix:
 
 script:
   - cd $ROOT_FOLDER
+  - npm install
   - npm test
