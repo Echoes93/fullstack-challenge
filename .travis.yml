@@ -2,19 +2,36 @@ language: node_js
 node_js:
   - "10"
 
+services:
+  - docker
+
+notifications:
+  email: false
+
 jobs:
   include:
   - name: Client Pipeline
     if: commit_message ~= /\bFE\b/ 
-    env: ROOT_FOLDER=client
+    env: ROOT_FOLDER=client IMAGE_REPO=echoes93/csv-client
   - name: Server Pipeline
     if: commit_message ~= /\bBE\b/ 
-    env: ROOT_FOLDER=server
+    env: ROOT_FOLDER=server IMAGE_REPO=echoes93/csv-server
 
-script:
+install:
   - cd $ROOT_FOLDER
   - npm install
+
+script:
   - npm test
 
-notifications:
-  email: false
+after_success:
+  - docker build -t $IMAGE_REPO:latest -t $IMAGE_REPO:0.$TRAVIS_BUILD_NUMBER .
+
+before_deploy:
+- docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+
+deploy:
+  provider: script
+  script: docker push $IMAGE_REPO:latest && docker push $IMAGE_REPO:0.$TRAVIS_BUILD_NUMBER
+  on:
+    branch: master
