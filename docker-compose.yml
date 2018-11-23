@@ -17,13 +17,13 @@ services:
       - /usr/app/node_modules
     ports:
       - "3001:8080"
-    # env_file: ./server/.env # TODO - uncomment this to auto-load your .env file!
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
   client:
     build:
       context: ./client/
+      dockerfile: dev.Dockerfile
     command: npm start
     volumes:
       - /WORK/csv-challenge/client/:/usr/app
