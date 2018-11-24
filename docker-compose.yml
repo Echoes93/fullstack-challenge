@@ -1,13 +1,16 @@
 version: '3'
+
 services:
-  reverse-proxy:
+  traefik:
     image: traefik
-    command: --api --docker
+    command: --api --docker --logLevel=DEBUG
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
   server:
     build:
       context: ./server/
@@ -15,11 +18,14 @@ services:
     volumes:
       - /WORK/csv-challenge/server/:/usr/app
       - /usr/app/node_modules
-    ports:
-      - "3001:8080"
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+    labels:
+      - "traefik.backend=server"
+      - "traefik.frontend.rule=PathPrefixStrip:/api/"
+      - "traefik.port=8080"
+
   client:
     build:
       context: ./client/
@@ -30,7 +36,9 @@ services:
       - /usr/app/node_modules
     depends_on:
       - server
-    ports:
-    - "3000:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    labels:
+      - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.backend=client"
+      - "traefik.port=3000"
