@@ -41,3 +41,11 @@ services:
     labels:
       - "traefik.frontend.rule=Host:echoes93.com"
       - "traefik.backend=client"
+
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: 
+      - server
+      - client
