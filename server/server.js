@@ -10,5 +10,9 @@ app.get('/', (req, res) => {
   res.send('Hello world\n');
 });
 
+app.get('/ping', (req, res) => {
+  res.send('pong\n');
+});
+
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
