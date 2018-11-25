@@ -1,0 +1,43 @@
+
+version: '3'
+
+services:
+  traefik:
+    image: traefik
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/acme.json:/acme.json
+    command:
+      - --web
+      - --docker
+      - --defaultentrypoints=http,https
+      - --entrypoints=Name:http Address::80 Redirect.EntryPoint:https
+      - --entrypoints=Name:https Address::443 TLS
+      - --acme
+      - --acme.email=isdmitry93@gmail.com
+      - --acme.storage=acme.json
+      - --acme.entryPoint=https
+      - --acme.httpChallenge.entryPoint=http
+      - --acme.OnHostRule=true
+      - --acme.onDemand=false
+    labels:
+      - "traefik.frontend.rule=Host:proxy.echoes93.com"
+      - "traefik.port=8080"
+
+  server:
+    image: echoes93/csv-server
+    labels:
+      - "traefik.frontend.rule=Host:api.echoes93.com"
+      - "traefik.backend=server"
+      - "traefik.port=8080"
+
+  client:
+    image: echoes93/csv-client
+    depends_on:
+      - server
+    labels:
+      - "traefik.frontend.rule=Host:echoes93.com"
+      - "traefik.backend=client"
