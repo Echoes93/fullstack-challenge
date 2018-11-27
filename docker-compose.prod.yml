@@ -4,6 +4,7 @@ version: '3'
 services:
   traefik:
     image: traefik
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -29,6 +30,7 @@ services:
 
   server:
     image: echoes93/csv-server
+    restart: unless-stopped
     labels:
       - "traefik.frontend.rule=Host:api.echoes93.com"
       - "traefik.backend=server"
@@ -36,6 +38,7 @@ services:
 
   client:
     image: echoes93/csv-client
+    restart: unless-stopped
     depends_on:
       - server
     labels:
@@ -44,5 +47,6 @@ services:
 
   watchtower:
     image: v2tec/watchtower
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
