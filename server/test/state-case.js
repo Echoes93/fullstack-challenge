@@ -11,7 +11,7 @@ const populateState = (state) => {
   ];
 
   R.pipe(
-    R.xprod(R.range(0, 10)),
+    R.xprod(R.times(n => String(n), 10)),
     R.forEach(state.put)
   )(vals);
 };
