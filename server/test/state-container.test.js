@@ -1,5 +1,5 @@
 const StateContainer = require("../lib/state-container");
-const { populateState, justifiesQuery } = require("./state-case");
+const { populateState, justifiesQuery } = require("./case/state-case");
 
 describe("Calling new StateContainer() returns object", () => {
   it("is instance of StateContainer", () => {
@@ -24,7 +24,7 @@ describe("Calling search()", () => {
     expect(result).toBeInstanceOf(Promise);
   });
 
-  it("returns results, which contain string with specified query", () => {
+  it("returns entries, which contain string with specified query", () => {
     const container = new StateContainer();
     const query = "AB";
     populateState(container);

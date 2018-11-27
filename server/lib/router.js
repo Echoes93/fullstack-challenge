@@ -4,8 +4,10 @@ const csv = require("csv-streamify");
 
 const rootRouter = Router();
 
+
 rootRouter.post("/search", (req, res) => {
-  const { query, limit } = req.body;
+  const query = String(req.body.query);
+  const limit = Number.isInteger(req.body.query) ? req.body.query : 20;
 
   req.stateContainer
     .search(query, limit)
@@ -13,7 +15,7 @@ rootRouter.post("/search", (req, res) => {
     .then(results => res.json({ results }));
 });
 
-rootRouter.post("/import", (req, res) => {
+rootRouter.post("/import", acceptMultipart, (req, res) => {
   const multipartStream = new Busboy({ headers: req.headers });
   const parseStream = csv();
 
@@ -21,21 +23,34 @@ rootRouter.post("/import", (req, res) => {
     req.stateContainer.put(line);
   });
 
-  multipartStream.on("file", function(_fieldname, file) {
-    file.pipe(parseStream);
+  multipartStream.on("file", function(_fieldname, file, _filename, _encoding, mimetype) {
+    if (mimetype != "text/csv") {
+      res.json(415, "Expects mimetype \"text/csv\"");
+    } else {
+      file.pipe(parseStream);
+    };
   });
 
   multipartStream.on("finish", function() {
-    res.json("ok");
+    res.send(201);
   });
 
   return req.pipe(multipartStream);
 });
 
+
 module.exports = rootRouter;
 
 
 // HELPERS
+function acceptMultipart (req, res, next) {
+  if (req.is("multipart/form-data")) {
+    next();
+  } else {
+    res.json(415, "Expects Content-Type multipart/form-data")
+  };
+};
+
 const mapListsToObj = (lists) => lists.map(listToObject);
 const listToObject = (list) => ({
   id: Number(list[0]),
