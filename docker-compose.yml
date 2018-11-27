@@ -14,7 +14,7 @@ services:
   server:
     build:
       context: ./server/
-    command: npm start
+    command: npm run dev
     volumes:
       - /WORK/csv-challenge/server/:/usr/app
       - /usr/app/node_modules
