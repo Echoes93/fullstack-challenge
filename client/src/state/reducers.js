@@ -67,8 +67,7 @@ const uploadReducer = combineReducers({ file, valid, status, progress });
 
 const rootReducer = combineReducers({
   upload: uploadReducer,
-  search: searchReducer,
-  notifications: notificationsReducer
+  search: searchReducer
 });
 
 export default rootReducer;
