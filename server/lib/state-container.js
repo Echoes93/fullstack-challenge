@@ -24,7 +24,9 @@ function StateContainer () {
   this.put = (record) => state.push(record);
   this.search = (query = "", limit = 20) => 
     H(state)
-      .filter(line => line.some(s => s.includes(query)))
+      .filter(line => line.some(s => s.toLowerCase().includes(
+        query.toLowerCase())
+      ))
       .take(limit)
       .collect()
       .toPromise(Promise);
