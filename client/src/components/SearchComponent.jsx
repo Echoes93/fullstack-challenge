@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { ACTION_CREATORS } from "../state/actions";
 
-const Search = ({ query, onSearchQueryChange, results }) => (
+const SearchComponent = ({ query, onSearchQueryChange, results }) => (
   <div className="container my-3">
     <h3>Search</h3>
     <div className="input-group"> 
@@ -44,10 +44,10 @@ const Search = ({ query, onSearchQueryChange, results }) => (
 
 export default connect(
   state => ({
-    query: state.searchQuery,
-    results: state.results
+    query: state.search.searchQuery,
+    results: state.search.results
   }),
   dispatch => ({
     onSearchQueryChange: query => dispatch(ACTION_CREATORS.searchQueryChanged(query))
   })
-)(Search);
+)(SearchComponent);

@@ -23,16 +23,12 @@ rootRouter.post("/import", acceptMultipart, (req, res) => {
     req.stateContainer.put(line);
   });
 
-  multipartStream.on("file", function(_fieldname, file, _filename, _encoding, mimetype) {
-    if (mimetype != "text/csv") {
-      res.json(415, "Expects mimetype \"text/csv\"");
-    } else {
-      file.pipe(parseStream);
-    };
+  multipartStream.on("file", function(_fieldname, file) {
+    file.pipe(parseStream);
   });
 
   multipartStream.on("finish", function() {
-    res.send(201);
+    res.sendStatus(201);
   });
 
   return req.pipe(multipartStream);
@@ -47,7 +43,7 @@ function acceptMultipart (req, res, next) {
   if (req.is("multipart/form-data")) {
     next();
   } else {
-    res.json(415, "Expects Content-Type multipart/form-data")
+    res.status(415).send("Expects Content-Type multipart/form-data");
   };
 };
 
