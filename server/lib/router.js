@@ -23,8 +23,12 @@ rootRouter.post("/import", acceptMultipart, (req, res) => {
     req.stateContainer.put(line);
   });
 
-  multipartStream.on("file", function(_fieldname, file) {
-    file.pipe(parseStream);
+  multipartStream.on("file", function(_fieldname, file, filename) {
+    if ( !(/.*\.csv$/.test(filename)) ) {
+      res.json(415, "Expects mimetype \"text/csv\"");
+    } else {
+      file.pipe(parseStream);
+    };
   });
 
   multipartStream.on("finish", function() {
