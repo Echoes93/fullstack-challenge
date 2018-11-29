@@ -10,8 +10,8 @@ const UploadComponent = ({ file, valid, progress, onFileSelected, onFileUpload }
         <div className="custom-file">
           <input 
             type="file" 
+            id="uploadField"
             className="custom-file-input" 
-            id="inputGroupFile02"
             onChange={e => onFileSelected(e.target.files[0])} />
           <label className="custom-file-label" htmlFor="inputGroupFile02">
             {file ? file.name : "Choose File"}
@@ -20,6 +20,7 @@ const UploadComponent = ({ file, valid, progress, onFileSelected, onFileUpload }
         <div className="input-group-append">
           <button 
             type="button" 
+            id="uploadButton"
             className="btn btn-outline-primary" 
             onClick={() => onFileUpload(file)}
             disabled={!valid}

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { generate as generateKey } from "shortid";
 
 import { ACTION_CREATORS } from "../state/actions";
 
@@ -8,8 +9,9 @@ const SearchComponent = ({ query, onSearchQueryChange, results }) => (
     <h3>Search</h3>
     <div className="input-group"> 
       <input 
-        className="form-control mr-sm-2" 
         type="text" 
+        id="searchField"
+        className="form-control mr-sm-2" 
         placeholder="Search"
         value={query}
         onChange={e => onSearchQueryChange(e.target.value)} />
@@ -28,7 +30,7 @@ const SearchComponent = ({ query, onSearchQueryChange, results }) => (
       <tbody>
         {
           results.map((entry, index) => (
-            <tr key={index}>
+            <tr id={`result-${index}`} key={generateKey()}>
               <td>{entry.id}</td>
               <td>{entry.name}</td>
               <td>{entry.age}</td>
