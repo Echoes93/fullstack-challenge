@@ -6,7 +6,11 @@ const Upload = () => (
     <div className="form-group">
       <div className="input-group mb-3">
         <div className="custom-file">
-          <input type="file" className="custom-file-input" id="inputGroupFile02" />
+          <input 
+            type="file" 
+            className="custom-file-input" 
+            id="inputGroupFile02"
+            onChange={e => console.log(e.target.files)} />
           <label className="custom-file-label" htmlFor="inputGroupFile02">Choose file</label>
         </div>
         <div className="input-group-append">
