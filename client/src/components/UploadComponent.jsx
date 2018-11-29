@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { ACTION_CREATORS } from "../state/actions";
 
-const UploadComponent = ({ file, valid, onFileSelected, onFileUpload }) => (
+const UploadComponent = ({ file, valid, progress, onFileSelected, onFileUpload }) => (
   <div className="container my-3">
     <h3>Upload</h3>
     <div className="form-group">
@@ -28,7 +28,13 @@ const UploadComponent = ({ file, valid, onFileSelected, onFileUpload }) => (
       </div>
     </div>
     <div className="progress">
-      <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={{width: "25%"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      <div 
+        className="progress-bar progress-bar-striped progress-bar-animated" 
+        role="progressbar" 
+        style={{width: `${progress}%`}} 
+        aria-valuenow="25" 
+        aria-valuemin="0" 
+        aria-valuemax="100"></div>
     </div>
   </div>
 );
@@ -36,7 +42,8 @@ const UploadComponent = ({ file, valid, onFileSelected, onFileUpload }) => (
 export default connect(
   state => ({
     file: state.upload.file,
-    valid: state.upload.valid
+    valid: state.upload.valid,
+    progress: state.upload.progress
   }),
   dispatch => ({
     onFileSelected: file => dispatch(ACTION_CREATORS.fileSelected(file)),

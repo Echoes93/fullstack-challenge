@@ -6,7 +6,8 @@ export const ACTIONS = {
   // File ajax
   FILE_UPLOAD_ATTEMPT: "FILE_UPLOAD_ATTEMPT",
   FILE_UPLOAD_SUCCESS: "FILE_UPLOAD_SUCCESS",
-  FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR"
+  FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR",
+  FILE_UPLOAD_PROGRESS: "FILE_UPLOAD_PROGRESS"
 };
 
 export const ACTION_CREATORS = {
@@ -14,7 +15,9 @@ export const ACTION_CREATORS = {
   resultsReceived: results => ({ type: ACTIONS.RESULTS_RECEIVED, payload: results }),
   fileSelected: file => ({ type: ACTIONS.FILE_SELECTED, payload: file }),
   ajaxError: err => ({ type: ACTIONS.AJAX_ERROR, payload: err }),
+
   fileUploadAttempt: file => ({ type: ACTIONS.FILE_UPLOAD_ATTEMPT, payload: file }),
   fileUploadSuccess: () => ({ type: ACTIONS.FILE_UPLOAD_SUCCESS }),
-  fileUploadError: err => ({ type: ACTIONS.FILE_UPLOAD_ERROR, payload: err })
+  fileUploadError: err => ({ type: ACTIONS.FILE_UPLOAD_ERROR, payload: err }),
+  fileUploadProgress: percentage => ({ type: ACTIONS.FILE_UPLOAD_PROGRESS, payload: percentage })
 };

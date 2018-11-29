@@ -1,11 +1,13 @@
 import { ofType, combineEpics } from "redux-observable";
 import { ajax } from "rxjs/ajax";
-import { debounceTime, switchMap, map, catchError, mergeMap } from "rxjs/operators";
+import { Subject, merge } from "rxjs";
+import { debounceTime, throttleTime, switchMap, map, catchError } from "rxjs/operators";
 
 import { ACTIONS, ACTION_CREATORS } from "./actions";
 import { of } from "rxjs";
 
-const api_host = process.env.NODE_ENV === "development" ? "/api" : "https://api.echoes93.com";
+// const api_host = process.env.NODE_ENV === "development" ? "/api" : "https://api.echoes93.com";
+const api_host = "http://localhost:8080";
 
 const queryEpic = action$ => action$.pipe(
   ofType(ACTIONS.QUERY_CHANGED),
@@ -17,19 +19,33 @@ const queryEpic = action$ => action$.pipe(
 
 const uploadFileEpic = action$ => action$.pipe(
   ofType(ACTIONS.FILE_UPLOAD_ATTEMPT),
-  mergeMap(({ payload }) => {
+  throttleTime(2000),
+  switchMap(({ payload }) => {
     const formData = new FormData();
     formData.append("file", payload);
 
-    return ajax({
+    const progressSubscriber = new Subject();
+    const request = ajax({
       url: `${api_host}/import`,
       method: "POST",
-      body: formData
-    }).pipe(
+      body: formData,
+      progressSubscriber
+    });
+
+    const requestObservable = request.pipe(
       map(() => ACTION_CREATORS.fileUploadSuccess()),
       catchError(error => of(ACTION_CREATORS.fileUploadError(error)))
     );
-  })
+
+    const progressObsevable = progressSubscriber.pipe(
+      map(e => {
+        const pct = Math.round((e.loaded / e.total) * 100);
+        return ACTION_CREATORS.fileUploadProgress(pct)
+      })
+    );
+
+    return merge(requestObservable, progressObsevable);
+  }),
 );
 
 const rootEpic = combineEpics(
