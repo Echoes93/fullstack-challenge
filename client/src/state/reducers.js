@@ -1,24 +1,6 @@
 import { combineReducers } from "redux";
 import { ACTIONS } from "./actions";
 
-const query = (state = "", {type, payload}) => {
-  switch (type) {
-    case ACTIONS.QUERY_CHANGED:
-      return payload;
-    default:
-      return state;
-  }
-};
-
-const results = (state = [], { type, payload }) => {
-  switch (type) {
-    case ACTIONS.RESULTS_RECEIVED:
-      return payload;
-    default:
-      return state;
-  }
-};
-
 const file = (state = null, { type, payload }) => {
   switch (type) {
     case ACTIONS.FILE_SELECTED:
@@ -61,8 +43,41 @@ const progress = (state = 0, { type, payload }) => {
   }
 };
 
+/* 
+ * React-Autosuggest returns undefined instead of empty string; 
+ * Return "" in such case;
+*/ 
+const query = (state = "", { type, payload }) => {
+  switch (type) {
+    case ACTIONS.QUERY_CHANGED:
+      return payload ? payload : "";
+    default:
+      return state;
+  }
+};
 
-const searchReducer = combineReducers({ query, results });
+const suggestions = (state = [], { type, payload }) => {
+  switch (type) {
+    case ACTIONS.SUGGESTIONS_RECEIVED:
+      return payload;
+    case ACTIONS.CLEAR_SUGGESTIONS:
+      return [];
+    default:
+      return state;
+    }
+};
+
+const results = (state = [], { type, payload }) => {
+  switch (type) {
+    case ACTIONS.DISPLAY_RESULTS:
+      return payload;
+    default:
+      return state;
+  }
+};
+
+
+const searchReducer = combineReducers({ query, suggestions, results });
 const uploadReducer = combineReducers({ file, valid, status, progress });
 
 const rootReducer = combineReducers({

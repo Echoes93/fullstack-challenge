@@ -2,21 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { generate as generateKey } from "shortid";
 
+import SearchFieldComponent from "./SearchFieldComponent";
 import { ACTION_CREATORS } from "../state/actions";
 
 const SearchComponent = ({ query, onSearchQueryChange, results }) => (
   <div className="container my-3">
     <h3>Search</h3>
-    <div className="input-group"> 
-      <input 
-        type="text" 
-        id="searchField"
-        className="form-control mr-sm-2" 
-        placeholder="Search"
-        value={query}
-        onChange={e => onSearchQueryChange(e.target.value)} />
-      <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </div>
+    <SearchFieldComponent />
     <table className="table my-2">
       <thead>
         <tr>

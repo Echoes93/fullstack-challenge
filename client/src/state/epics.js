@@ -6,14 +6,13 @@ import { debounceTime, throttleTime, switchMap, map, catchError } from "rxjs/ope
 import { ACTIONS, ACTION_CREATORS } from "./actions";
 import { of } from "rxjs";
 
-// const api_host = process.env.NODE_ENV === "development" ? "/api" : "https://api.echoes93.com";
-const api_host = "http://localhost:8080";
+const api_host = process.env.NODE_ENV === "development" ? "/api" : "https://api.echoes93.com";
 
 const queryEpic = action$ => action$.pipe(
-  ofType(ACTIONS.QUERY_CHANGED),
-  debounceTime(500),
+  ofType(ACTIONS.LOOKUP_SUGGESTIONS),
+  debounceTime(550),
   switchMap(({ payload }) => ajax.post(`${api_host}/search`, { query: payload })),
-  map(({ response }) => ACTION_CREATORS.resultsReceived(response.results)),
+  map(({ response }) => ACTION_CREATORS.suggestionsReceived(response.results)),
   catchError(error => of(ACTION_CREATORS.ajaxError(error)))
 );
 

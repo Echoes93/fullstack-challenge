@@ -1,9 +1,13 @@
 export const ACTIONS = {
+  // Search
   QUERY_CHANGED: "QUERY_CHANGED",
-  RESULTS_RECEIVED: "RESULTS_RECEIVED",
-  FILE_SELECTED: "FILE_SELECTED",
+  LOOKUP_SUGGESTIONS: "LOOKUP_SUGGESTIONS",
+  SUGGESTIONS_RECEIVED: "SUGGESTIONS_RECEIVED",
+  CLEAR_SUGGESTIONS: "CLEAR_SUGGESTIONS",
+  DISPLAY_RESULTS: "DISPLAY_RESULTS",
   AJAX_ERROR: "AJAX_ERROR",
-  // File ajax
+  // File 
+  FILE_SELECTED: "FILE_SELECTED",
   FILE_UPLOAD_ATTEMPT: "FILE_UPLOAD_ATTEMPT",
   FILE_UPLOAD_SUCCESS: "FILE_UPLOAD_SUCCESS",
   FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR",
@@ -12,10 +16,13 @@ export const ACTIONS = {
 
 export const ACTION_CREATORS = {
   searchQueryChanged: query => ({type: ACTIONS.QUERY_CHANGED, payload: query}),
-  resultsReceived: results => ({ type: ACTIONS.RESULTS_RECEIVED, payload: results }),
-  fileSelected: file => ({ type: ACTIONS.FILE_SELECTED, payload: file }),
+  lookupSuggestions: query => ({ type: ACTIONS.LOOKUP_SUGGESTIONS, payload: query }),
+  clearSuggestions: () => ({ type: ACTIONS.CLEAR_SUGGESTIONS }),
+  suggestionsReceived: results => ({ type: ACTIONS.SUGGESTIONS_RECEIVED, payload: results }),
+  displayResults: results => ({ type: ACTIONS.DISPLAY_RESULTS, payload: results }),
   ajaxError: err => ({ type: ACTIONS.AJAX_ERROR, payload: err }),
-
+  
+  fileSelected: file => ({ type: ACTIONS.FILE_SELECTED, payload: file }),
   fileUploadAttempt: file => ({ type: ACTIONS.FILE_UPLOAD_ATTEMPT, payload: file }),
   fileUploadSuccess: () => ({ type: ACTIONS.FILE_UPLOAD_SUCCESS }),
   fileUploadError: err => ({ type: ACTIONS.FILE_UPLOAD_ERROR, payload: err }),
