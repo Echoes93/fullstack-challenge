@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Autosuggest from "react-autosuggest";
 
-import { ACTION_CREATORS } from "../state/actions";
+import { ACTION_CREATORS } from "../../state/actions";
 import "./autosuggest.css";
 
 

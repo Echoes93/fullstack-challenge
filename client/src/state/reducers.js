@@ -26,7 +26,9 @@ const status = (state = null, { type }) => {
     case ACTIONS.FILE_UPLOAD_SUCCESS:
       return "Success";
     case ACTIONS.FILE_UPLOAD_ERROR:
-      return "Rejected";
+      return "Errored";
+    case ACTIONS.RESET_STATUS:
+      return "";
     default:
       return state;
   }

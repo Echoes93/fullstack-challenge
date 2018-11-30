@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ACTION_CREATORS } from "../state/actions";
+
+import UploadStatusComponent from "./UploadStatusComponent";
+import { ACTION_CREATORS } from "../../state/actions";
 
 const UploadComponent = ({ file, valid, progress, onFileSelected, onFileUpload }) => (
   <div className="container my-3">
@@ -28,15 +30,7 @@ const UploadComponent = ({ file, valid, progress, onFileSelected, onFileUpload }
         </div>
       </div>
     </div>
-    <div className="progress">
-      <div 
-        className="progress-bar progress-bar-striped progress-bar-animated" 
-        role="progressbar" 
-        style={{width: `${progress}%`}} 
-        aria-valuenow="25" 
-        aria-valuemin="0" 
-        aria-valuemax="100"></div>
-    </div>
+    <UploadStatusComponent />
   </div>
 );
 

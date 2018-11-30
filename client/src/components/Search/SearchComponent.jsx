@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { generate as generateKey } from "shortid";
 
 import SearchFieldComponent from "./SearchFieldComponent";
-import { ACTION_CREATORS } from "../state/actions";
+import { ACTION_CREATORS } from "../../state/actions";
 
 const SearchComponent = ({ query, onSearchQueryChange, results }) => (
   <div className="container my-3">

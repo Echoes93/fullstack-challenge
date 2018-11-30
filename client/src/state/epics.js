@@ -6,7 +6,8 @@ import { debounceTime, throttleTime, switchMap, map, catchError } from "rxjs/ope
 import { ACTIONS, ACTION_CREATORS } from "./actions";
 import { of } from "rxjs";
 
-const api_host = process.env.NODE_ENV === "development" ? "/api" : "https://api.echoes93.com";
+// const api_host = process.env.NODE_ENV === "development" ? "/api" : "https://api.echoes93.com";
+const api_host = "http://localhost:8080";
 
 const queryEpic = action$ => action$.pipe(
   ofType(ACTIONS.LOOKUP_SUGGESTIONS),

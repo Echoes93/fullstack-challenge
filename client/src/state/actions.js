@@ -11,7 +11,8 @@ export const ACTIONS = {
   FILE_UPLOAD_ATTEMPT: "FILE_UPLOAD_ATTEMPT",
   FILE_UPLOAD_SUCCESS: "FILE_UPLOAD_SUCCESS",
   FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR",
-  FILE_UPLOAD_PROGRESS: "FILE_UPLOAD_PROGRESS"
+  FILE_UPLOAD_PROGRESS: "FILE_UPLOAD_PROGRESS",
+  RESET_STATUS: "RESET_STATUS"
 };
 
 export const ACTION_CREATORS = {
@@ -26,5 +27,6 @@ export const ACTION_CREATORS = {
   fileUploadAttempt: file => ({ type: ACTIONS.FILE_UPLOAD_ATTEMPT, payload: file }),
   fileUploadSuccess: () => ({ type: ACTIONS.FILE_UPLOAD_SUCCESS }),
   fileUploadError: err => ({ type: ACTIONS.FILE_UPLOAD_ERROR, payload: err }),
-  fileUploadProgress: percentage => ({ type: ACTIONS.FILE_UPLOAD_PROGRESS, payload: percentage })
+  fileUploadProgress: percentage => ({ type: ACTIONS.FILE_UPLOAD_PROGRESS, payload: percentage }),
+  resetStatus: () => ({ type: ACTIONS.RESET_STATUS })
 };
