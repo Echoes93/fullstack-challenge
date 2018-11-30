@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { ACTION_CREATORS } from "../../state/actions";
 
+
 const UploadStatusComponent = ({ progress, status, dismiss }) => {
   switch (status) {
     case "Pending": 

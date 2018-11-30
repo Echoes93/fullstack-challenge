@@ -7,7 +7,7 @@ import "./autosuggest.css";
 
 
 /*
- * I am ashamed of this.
+ * I am ashamed for this.
 */
 
 const propLookup = (query, suggestion) => {
@@ -58,7 +58,7 @@ const SearchFieldComponent = ({
       onChange: (_e, { newValue }) => onSearchQueryChange(newValue),
       onKeyPress: (e) => { if (e.key === "Enter") displayResults(suggestions) } 
     }}
-    />
+  />
 
 
 export default connect(
