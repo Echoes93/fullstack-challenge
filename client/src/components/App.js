@@ -1,8 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
 
-import UploadComponent from "./Upload/UploadComponent";
-import SearchComponent from "./Search/SearchComponent";
+import UploadComponent from "./Upload";
+import SearchComponent from "./Search";
 import { store } from "../state/state-store";
 
 
