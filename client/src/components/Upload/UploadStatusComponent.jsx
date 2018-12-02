@@ -33,9 +33,9 @@ const UploadStatusComponent = ({ progress, status, dismiss }) => {
             <button type="button" className="close" data-dismiss="alert" onClick={ dismiss }>&times;</button>
             <strong>Oops!</strong> Error occured.
           </div>
-        </div>)
+        </div>);
       
-    default: return <div></div>     
+    default: return <div></div>; 
   }
 };
 

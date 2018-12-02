@@ -24,9 +24,7 @@ function StateContainer () {
   this.put = (record) => state.push(record);
   this.search = (query = "", limit = 20) => 
     H(state)
-      .filter(line => line.some(s => s.toLowerCase().includes(
-        query.toLowerCase())
-      ))
+      .filter(filterByQueryInclusion(query))
       .take(limit)
       .collect()
       .toPromise(Promise);
@@ -40,3 +38,8 @@ StateContainer.withState = (stateContainer) => (req, _res, next) => {
 };
 
 module.exports = StateContainer;
+
+
+// HELPERS
+const filterByQueryInclusion = (query) => (entry) => 
+  entry.some(s => s.toLowerCase().includes(query.toLowerCase()));

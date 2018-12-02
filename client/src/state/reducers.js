@@ -46,8 +46,10 @@ const progress = (state = 0, { type, payload }) => {
 };
 
 /* 
+ * ------------------------ Kludge ----------------------------
  * React-Autosuggest returns undefined instead of empty string; 
  * Return "" in such case;
+ * ------------------------------------------------------------
 */ 
 const query = (state = "", { type, payload }) => {
   switch (type) {
