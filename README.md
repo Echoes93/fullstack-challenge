@@ -1,11 +1,13 @@
 # Full-Stack code challenge for Pipedrive
+Application demo is available at [echoes93.com](https://echoes93.com), with API server at [api.echoes93.com](https://api.echoes93.com). Please, take in note that imported data is stored in memory, which is very limited. I've widen it from 500MB to 1GB, but still, uploading 10MB test file 3x times is just enough to consume almost whole of available memory, and when it exceeds - service will go down and restarted by docker-compose, with no data at all.
+
 
 ## Requirements
  - Any docker-compose v3 compatible version of docker.
  - Node 8+ for local non-docker installation.
 
 ## Disclaimer
-This is a poor-mans take on simulating development-production pipeline, involving microservices and docker containers behind reverse-proxy. Also, I wanted to avoid unnecessary overengineering, like staging or build servers, load balancers, orchestration frameworks and other DevOps dedicated stuff. Whole application is hosted on cheapest and most trusted VPS service I know - Lightsail AWS, with 500MB RAM, 1vCPU, Ubuntu and for $3,5 of 30-days uptime. If you know better options (key resource is RAM) and, optionally, including 3rd level domain name + TLS, like Heroku does - please, inform me. 😅 
+This is a poor-man's take on simulating development-production pipeline, involving microservices and docker containers behind reverse-proxy. Also, I wanted to avoid unnecessary overengineering, like staging or build servers, load balancers, orchestration frameworks and other DevOps dedicated stuff. Whole application is hosted on cheapest and most trusted VPS service I know - Lightsail AWS, with 500MB RAM, 1vCPU, Ubuntu and for $3,5 of 30-days uptime. If you know better options (key resource is RAM) and, optionally, including 3rd level domain name + TLS, like Heroku does - please, inform me. 😅 
 
 Usually I consider using Heroku, because it is just fine for hosting demo apps, but in this particular case I wanted to use VPS + docker-compose. Heroku container service didn't fit my case, because it is for hosting just 1 container, without docker-compose. I also could go with "docker in docker" approach to enable my docker-compose on Heroku services, but I doubt that this would work well on free dynos.
 
@@ -47,7 +49,7 @@ My goal was to create minimal settings installation for production server. In fa
 Given that API server holds data at runtime, rather than in external db or on disk - such hot image swap would destroy all imported data.
 
 ## Backend
-This is basic Express server, with only 2 exposed routes:
+This is a basic [Express](https://expressjs.com/) server, with only 2 exposed routes:
  - POST "/search", accepts { query: string, limit: number } body. Default values are: { query: "", limit: 20 };
  - POST "/import", accepts Content-Type: "multipart/form-data" with boundary. File must have ".csv" extension;
 
@@ -79,4 +81,4 @@ Uses [React 16](https://reactjs.org/) as view library, [Redux](https://redux.js.
 Latter is part of official React distribution now and obsoletes other libraries. Functional components are also more handy when it comes to decomposing components to more 'atomic' kinds. Also, performance-wise, in combination with `connect` from [react-redux](https://github.com/reduxjs/react-redux), at the moment, they are very same as Reacts [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), and React dev team promises 30-40% performance boost for functional components in further React releases.
 
 ### Weak points
-I used [React Autosuggest](https://github.com/moroshko/react-autosuggest) library for form-completion, and it seems broken in case, when user tries to navigate through suggestions list using arrow keys. There are number of open issues on github, though it is most likely due to managing form value in state store, rather then in local state, and as soon its value changes - suggestions in state store and library managed inner state become desynchronized. Though this bug isn't 100% reproducible, and I haven't figured exact case yet. 
+I've used [React Autosuggest](https://github.com/moroshko/react-autosuggest) library for form-completion, and it seems broken in case, when user tries to navigate through suggestions list using arrow keys. There are number of open issues on github, though it is most likely due to managing form value in state store, rather then in local state, and as soon its value changes - suggestions in state store and library managed inner state become desynchronized. Though this bug isn't 100% reproducible, and I haven't figured exact case yet. 
