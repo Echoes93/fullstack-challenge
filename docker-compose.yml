@@ -17,7 +17,7 @@ services:
       dockerfile: dev.Dockerfile
     command: npm run dev
     volumes:
-      - /WORK/csv-challenge/server/:/usr/app
+      - $PWD/csv-challenge/server/:/usr/app
       - /usr/app/node_modules
     environment:
       - NODE_ENV=development
@@ -33,7 +33,7 @@ services:
       dockerfile: dev.Dockerfile
     command: npm start
     volumes:
-      - /WORK/csv-challenge/client/:/usr/app
+      - $PWD/csv-challenge/client/:/usr/app
       - /usr/app/node_modules
     depends_on:
       - server
