@@ -16,7 +16,10 @@ const populateState = (state) => {
   )(vals);
 };
 
-const justifiesQuery = (records, string) => 
-  R.all(R.contains(string))(records)
+const matchesQuery = (query, matchedField) => 
+  R.contains(
+    R.toLower(query),
+    R.toLower(matchedField)
+  );
 
-module.exports = { populateState, justifiesQuery };
+module.exports = { populateState, matchesQuery };

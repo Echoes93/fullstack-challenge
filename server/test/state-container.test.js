@@ -1,5 +1,5 @@
 const StateContainer = require("../lib/state-container");
-const { populateState, justifiesQuery } = require("./case/state-case");
+const { populateState, matchesQuery } = require("./case/state-case");
 
 describe("Calling new StateContainer() returns object", () => {
   it("is instance of StateContainer", () => {
@@ -31,7 +31,7 @@ describe("Calling search()", () => {
 
     container
       .search(query)
-      .then(results => expect(justifiesQuery(results, query)).toBeTruthy());
+      .then(results => expect(matchesQuery(query, results[1])).toBeTruthy());
   });
 
   it("returns list of maximum entries, specified by second parameter (limit)", () => {

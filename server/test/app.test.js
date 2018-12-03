@@ -2,7 +2,7 @@ const R = require("ramda");
 const supertest = require("supertest");
 const createApp = require("../lib/app");
 const StateContainer = require("../lib/state-container");
-const { populateState } = require("./case/state-case");
+const { populateState, matchesQuery } = require("./case/state-case");
 
 describe("createApp()", () => {
   it("is Function", () => {
@@ -69,10 +69,8 @@ describe("POST /search", () => {
           // has expected keys
           expect(R.keys(entry)).toEqual(expect.arrayContaining(expectedKeys));
 
-          // Contains specified query in any of properties
-          expect(entry.name).toEqual(
-            expect.stringContaining(query)
-          );
+          // Contains specified query in "name" property
+          expect(matchesQuery(query, entry.name)).toBeTruthy();
         });
       });
   });
