@@ -58,11 +58,11 @@ describe("Calling search()", () => {
 describe("Calling put()", () => {
   it("pushes value into container", () => {
     const { put, search } = new StateContainer();
-    const dummyRecord = ["dummy", "record"];
+    const dummyRecord = ["dummy", "name_field"];
 
     put(dummyRecord);
 
-    return search("dummy")
+    return search("name_field")
       .then(results => {
         expect(results).toContain(dummyRecord);
       });

@@ -70,9 +70,9 @@ describe("POST /search", () => {
           expect(R.keys(entry)).toEqual(expect.arrayContaining(expectedKeys));
 
           // Contains specified query in any of properties
-          expect(
-            R.any(R.contains(query), R.values(entry))
-          ).toBeTruthy();
+          expect(entry.name).toEqual(
+            expect.stringContaining(query)
+          );
         });
       });
   });

@@ -17,6 +17,6 @@ const populateState = (state) => {
 };
 
 const justifiesQuery = (records, string) => 
-  R.all(R.any(R.contains(string)))(records)
+  R.all(R.contains(string))(records)
 
 module.exports = { populateState, justifiesQuery };

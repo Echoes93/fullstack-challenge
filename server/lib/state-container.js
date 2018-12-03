@@ -42,4 +42,4 @@ module.exports = StateContainer;
 
 // HELPERS
 const filterByQueryInclusion = (query) => (entry) => 
-  entry[1].toLowerCase().includes(query.toLowerCase());
+  String(entry[1]).toLowerCase().includes(query.toLowerCase());
