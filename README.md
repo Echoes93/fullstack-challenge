@@ -1,5 +1,5 @@
 # Full-Stack code challenge for Pipedrive
-Application demo is available at [echoes93.com](https://echoes93.com), with API server at [api.echoes93.com](https://api.echoes93.com). Please, take in note that imported data is stored in memory, which is very limited. I've widen it from 500MB to 1GB, but still, uploading 10MB test file 3x times is just enough to consume almost whole of available memory, and when it exceeds - service will go down and restarted by docker-compose, with no data at all.
+Application demo is available at [echoes93.com](https://echoes93.com), with API server at [api.echoes93.com](https://api.echoes93.com). Please, take in note that imported data is stored in memory, which is limited to 480MB. Uploading 10MB file is just enough to send API service down with *out of memory* exception. It will be restarted after by docker-compose restart policy. I've tried 1GB instance, but for some reason behaviour differs there, and instead of sending down service which exceeds memory consumption - it hangs all connections at 95% mem usage. No idea yet, why does it happens, since both instances are created with the exact same boot script.
 
 
 ## Requirements
