@@ -60,6 +60,11 @@
   padding: 10px 20px;
 }
 
+
+.react-autosuggest__suggestion b {
+  font-weight: 600;
+}
+
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
 }

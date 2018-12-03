@@ -7,7 +7,19 @@ import "./autosuggest.css";
 
 
 const getSuggestionValue = (suggestion) => suggestion.name;
-const renderSuggestion = (suggestion) => <span>{suggestion.name}</span>;
+const renderSuggestion = (query) => ({ name }) => {
+  const matchIndex = name.toLowerCase().indexOf(query.toLowerCase());
+  
+  if (matchIndex > -1) {
+    const head = name.substring(0, matchIndex);
+    const matchedValue = name.substring(matchIndex, matchIndex + query.length);
+    const tail = name.substring(matchIndex + query.length, name.length);
+  
+    return <p>{head}<b>{matchedValue}</b>{tail}</p>;
+  } else {
+    return <p>{name}</p>;
+  }
+};
 
 const SearchFieldComponent = ({ 
                                 query,
@@ -21,7 +33,7 @@ const SearchFieldComponent = ({
     onSuggestionsFetchRequested={ onSuggestionsFetchRequested }
     onSuggestionsClearRequested={ onSuggestionsClearRequested }
     getSuggestionValue={ getSuggestionValue }
-    renderSuggestion={ renderSuggestion }
+    renderSuggestion={ renderSuggestion(query) }
     onSuggestionSelected={ (_e, { suggestion }) => displayResults([suggestion]) }
     inputProps={{ 
       id: "searchField",
