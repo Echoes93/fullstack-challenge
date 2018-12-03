@@ -6,35 +6,8 @@ import { ACTION_CREATORS } from "../../state/actions";
 import "./autosuggest.css";
 
 
-/*
- * I am ashamed for this.
-*/
-
-const propLookup = (query, suggestion) => {
-  let targetProp = "";
-  for (let prop in suggestion) {
-    const lowerCasedVal = String(suggestion[prop]).toLowerCase();
-    if (lowerCasedVal.includes(query.toLowerCase())) {
-      targetProp = prop;
-      break;
-    }
-  };
-  return targetProp;
-};
-
-const getSuggestionValue = query => suggestion => suggestion[propLookup(query, suggestion)];
-const renderSuggestion = query => suggestion => {
-  const prop = propLookup(query, suggestion);
-  if (prop.length > 0) 
-    return (
-      <div className="selection-item">
-        <span>{prop}:</span>
-        <span>{suggestion[prop]}</span>
-      </div>
-    );
-  else return null;
-};
-
+const getSuggestionValue = (suggestion) => suggestion.name;
+const renderSuggestion = (suggestion) => <span>{suggestion.name}</span>;
 
 const SearchFieldComponent = ({ 
                                 query,
@@ -47,8 +20,8 @@ const SearchFieldComponent = ({
     suggestions={ suggestions }
     onSuggestionsFetchRequested={ onSuggestionsFetchRequested }
     onSuggestionsClearRequested={ onSuggestionsClearRequested }
-    getSuggestionValue={ getSuggestionValue(query) }
-    renderSuggestion={ renderSuggestion(query) }
+    getSuggestionValue={ getSuggestionValue }
+    renderSuggestion={ renderSuggestion }
     onSuggestionSelected={ (_e, { suggestion }) => displayResults([suggestion]) }
     inputProps={{ 
       id: "searchField",
