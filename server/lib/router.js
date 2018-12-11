@@ -7,7 +7,7 @@ const rootRouter = Router();
 
 rootRouter.post("/search", (req, res) => {
   const query = String(req.body.query);
-  const limit = Number.isInteger(req.body.query) ? req.body.query : 20;
+  const limit = Number.isInteger(req.body.limit) ? req.body.limit : 20;
 
   req.stateContainer
     .search(query, limit)
